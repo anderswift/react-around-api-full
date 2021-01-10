@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 
 const { login, createUser } = require('./controllers/userController');
-const userRoutes = require('./routes/users.js');
-const cardRoutes = require('./routes/cards.js');
+const auth = require('./middleware/auth');
+const userRoutes = require('./routes/users');
+const cardRoutes = require('./routes/cards');
 
 const { PORT = 3000 } = process.env;
 
@@ -20,14 +21,11 @@ app.use(helmet());
 app.use(express.json());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-// temporary substitute for authorization
-app.use((req, res, next) => {
-  req.user = { _id: '5fcd2f22bc67b45ae23cf625' };
-  next();
-});
-
 app.post('/signin', login);
 app.post('/signup', createUser);
+
+app.use(auth);
+
 app.use('/', cardRoutes);
 app.use('/', userRoutes);
 
