@@ -62,6 +62,25 @@ function createUser(req, res) {
     });
 }
 
+function getCurrentUser(req, res) {
+  return User.findById({ _id: req.user._id })
+    .then((user) => {
+      if (user === null) res.status(404).send({ message: 'User not found' });
+      else {
+        res.status(200).send({
+          _id: user._id,
+          email: user.email,
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+        });
+      }
+    })
+    .catch(() => {
+      res.status(500).send({ message: req.user._id });
+    });
+}
+
 function updateProfile(req, res) {
   const { name, about } = req.body;
   return User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
@@ -92,6 +111,7 @@ module.exports = {
   getUsers,
   getUserById,
   createUser,
+  getCurrentUser,
   updateProfile,
   updateAvatar,
 };
