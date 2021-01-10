@@ -1,4 +1,7 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const { JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -10,7 +13,7 @@ module.exports = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
-    payload = jwt.verify(token, 'temporary-secret-salt');
+    payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
     return res
       .status(401)
