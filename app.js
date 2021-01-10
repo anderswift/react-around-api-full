@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 
+const { login, createUser } = require('./controllers/userController');
 const userRoutes = require('./routes/users.js');
 const cardRoutes = require('./routes/cards.js');
 
@@ -25,6 +26,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post('/signin', login);
+app.post('/signup', createUser);
 app.use('/', cardRoutes);
 app.use('/', userRoutes);
 
