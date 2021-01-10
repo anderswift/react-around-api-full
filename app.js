@@ -6,6 +6,7 @@ const { login, createUser } = require('./controllers/userController');
 const auth = require('./middleware/auth');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
+const NotFoundError = require('./errors/NotFoundError');
 
 const { PORT = 3000 } = process.env;
 
@@ -29,8 +30,12 @@ app.use(auth);
 app.use('/', cardRoutes);
 app.use('/', userRoutes);
 
-app.use('*', (req, res) => { res.status(404).send({ message: 'Requested resource not found' }); });
+app.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
 
-app.listen(PORT, () => {
-  console.log(`App listening at port ${PORT}`);
+app.use((err, req, res, next) => {
+  const defaultStatus = (err.name === 'ValidationError') ? 400 : 500;
+  const { statusCode = defaultStatus, message = 'An error occurred on the server' } = err;
+  res.status(statusCode).send({ message });
 });
+
+app.listen(PORT);

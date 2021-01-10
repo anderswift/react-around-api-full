@@ -1,82 +1,69 @@
 const Card = require('../models/card');
 const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
-function getCards(req, res) {
+function getCards(req, res, next) {
   return Card.find({})
     .then((cards) => {
       res.status(200).send(cards);
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
-    });
+    .catch(next);
 }
 
-function createCard(req, res) {
+function createCard(req, res, next) {
   const { name, link } = req.body;
   return User.findById({ _id: req.user._id })
     .then((owner) => {
       Card.create({ name, link, owner })
         .then((card) => {
-          res.status(200).send(card);
+          res.status(201).send(card);
         })
-        .catch((err) => {
-          if (err.name === 'ValidationError') res.status(400).send(err);
-          res.status(500).send(err);
-        });
+        .catch(next);
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
-    });
+    .catch(next);
 }
 
-function deleteCard(req, res) {
+function deleteCard(req, res, next) {
   return Card.findById({ _id: req.params.cardId })
     .then((card) => {
-      if (!card) res.status(404).send({ message: 'The card was not found' });
-      else if (!card.owner._id.equals(req.user._id)) res.status(401).send({ message: 'Current user is not authorized to delete this card' });
+      if (!card) throw new NotFoundError('The card was not found');
+      else if (!card.owner._id.equals(req.user._id)) throw new UnauthorizedError('Current user is not authorized to delete this card');
       else {
         Card.findByIdAndDelete({ _id: req.params.cardId })
           .then(() => {
             res.status(200).send({ message: 'This post has been deleted' });
           })
-          .catch(() => {
-            res.status(500).send({ message: 'Requested resource not found' });
-          });
+          .catch(next);
       }
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
-    });
+    .catch(next);
 }
 
-function likeCard(req, res) {
+function likeCard(req, res, next) {
   return Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
     .then((card) => {
-      if (!card) res.status(404).send({ message: 'The card was not found' });
+      if (!card) throw new NotFoundError('The card was not found');
       else res.status(200).send(card);
     })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+    .catch(next);
 }
 
-function unlikeCard(req, res) {
+function unlikeCard(req, res, next) {
   return Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
   )
     .then((card) => {
-      if (!card) res.status(404).send({ message: 'The card was not found' });
+      if (!card) throw new NotFoundError('The card was not found');
       else res.status(200).send(card);
     })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+    .catch(next);
 }
 
 module.exports = {

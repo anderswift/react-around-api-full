@@ -4,41 +4,36 @@ require('dotenv').config();
 
 const { JWT_SECRET } = process.env;
 const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
 
-function login(req, res) {
+function login(req, res, next) {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
       res.status(200).send({ token: jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' }) });
     })
-    .catch((err) => {
-      res.status(401).send({ message: err.message });
-    });
+    .catch(next);
 }
 
-function getUsers(req, res) {
+function getUsers(req, res, next) {
   return User.find({})
     .then((users) => {
       res.status(200).send(users);
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
-    });
+    .catch(next);
 }
 
-function getUserById(req, res) {
+function getUserById(req, res, next) {
   return User.findById({ _id: req.params.id })
     .then((user) => {
-      if (user === null) res.status(404).send({ message: 'User ID not found' });
+      if (user === null) throw new NotFoundError('User ID not found');
       else res.status(200).send(user);
     })
-    .catch(() => {
-      res.status(500).send({ message: 'Requested resource not found' });
-    });
+    .catch(next);
 }
 
-function createUser(req, res) {
+function createUser(req, res, next) {
   const {
     email,
     password,
@@ -58,16 +53,13 @@ function createUser(req, res) {
     .then((user) => {
       res.status(201).send({ _id: user._id, email: user.email });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') res.status(400).send(err);
-      res.status(500).send(err);
-    });
+    .catch(next);
 }
 
-function getCurrentUser(req, res) {
+function getCurrentUser(req, res, next) {
   return User.findById({ _id: req.user._id })
     .then((user) => {
-      if (user === null) res.status(404).send({ message: 'User not found' });
+      if (user === null) throw new NotFoundError('User not found');
       else {
         res.status(200).send({
           _id: user._id,
@@ -78,34 +70,27 @@ function getCurrentUser(req, res) {
         });
       }
     })
-    .catch(() => {
-      res.status(500).send({ message: req.user._id });
-    });
+    .catch(next);
 }
 
-function updateProfile(req, res) {
+function updateProfile(req, res, next) {
   const { name, about } = req.body;
   return User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .then((user) => {
-      if (user === null) res.status(404).send({ message: 'User not found' });
+      if (user === null) throw new NotFoundError('User not found');
       res.status(200).send(user);
     })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+    .catch(next);
 }
 
-function updateAvatar(req, res) {
+function updateAvatar(req, res, next) {
   const { avatar } = req.body;
   return User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .then((user) => {
-      if (user === null) res.status(404).send({ message: 'User not found' });
+      if (user === null) throw new NotFoundError('User not found');
       res.status(200).send(user);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') res.status(400).send(err);
-      res.status(500).send(err);
-    });
+    .catch(next);
 }
 
 module.exports = {
