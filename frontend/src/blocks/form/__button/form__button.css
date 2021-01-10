@@ -1,0 +1,19 @@
+.form__button {
+  width: 100%;
+	box-sizing: border-box;
+	font-size: 18px;
+  line-height: 22px;
+  background: #fff;
+	color: #000; 
+	border: none;
+	outline: none;
+  margin-top: auto;
+	padding: 13px;
+  transition: opacity 250ms ease-out;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.form__button:hover, .form__button:focus {
+	opacity: .85;
+}

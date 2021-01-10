@@ -1,0 +1,27 @@
+@import url(./__list/photo-grid__list.css);
+
+.photo-grid {
+	width: 282px;
+	margin: 36px auto 48px auto;
+	
+}
+
+
+@media screen and (min-width: 618px) { 
+
+	.photo-grid {
+		width: 582px;
+	}
+
+}
+
+
+
+
+@media screen and (min-width: 918px) { 
+
+	.photo-grid {
+		width: 882px;
+	}
+
+}

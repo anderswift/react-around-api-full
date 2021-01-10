@@ -1,0 +1,19 @@
+.popup__exit {
+	display: block;
+	position: absolute;
+	top: -70px;
+	right: calc(50% - 18px);
+	background: url(../../../images/exit.svg) 50% 50% no-repeat;
+	width: 35px;
+	height: 35px;
+}
+
+
+@media screen and (min-width: 515px) {
+	
+	.popup__exit {
+		top: -35px;
+		right: -35px;
+	}
+	
+}

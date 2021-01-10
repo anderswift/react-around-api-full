@@ -1,0 +1,21 @@
+@import url(./__figure/photo-viewer__figure.css);
+@import url(./__image/photo-viewer__image.css);
+@import url(./__caption/photo-viewer__caption.css);
+@import url(./__exit/photo-viewer__exit.css); 
+
+
+.photo-viewer {
+	max-width: 90%;
+	flex-direction: column;
+	color: #fff;
+	margin: auto;
+	position: relative;
+}
+
+@media screen and (min-width: 515px) {
+	
+	.photo-viewer {
+		max-width: calc(100% - 90px);
+	}
+
+}

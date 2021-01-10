@@ -1,0 +1,29 @@
+.footer {
+	margin: 0 30px 36px 30px;
+	color: #545454;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+
+@media screen and (min-width: 618px) { 
+
+	.footer {
+		width: 582px;
+		font-size: 18px;
+		line-height: 22px;
+		margin-bottom: 60px;
+	}
+
+}
+
+
+@media screen and (min-width: 918px) {
+
+	.footer {
+    width: 882px;
+    margin: 0 20px 36px 20px;
+	}
+
+}
+

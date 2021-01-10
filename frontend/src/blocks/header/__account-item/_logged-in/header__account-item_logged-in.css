@@ -1,0 +1,25 @@
+.header__account-item_logged-in {
+  margin: 9px 10px;
+  font-size: 18px; 
+  line-height: 22px;
+}
+
+
+@media screen and (min-width: 480px) {
+
+  .header__account-item_logged-in {
+    font-size: inherit;
+    line-height: inherit;
+    margin: 5px 0 0 24px;
+  }
+
+}
+
+
+@media screen and (min-width: 918px) {
+
+  .header__account-item_logged-in {
+    margin: 0 0 0 24px;
+  }
+  
+}

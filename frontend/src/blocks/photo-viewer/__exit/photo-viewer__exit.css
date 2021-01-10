@@ -1,0 +1,13 @@
+.photo-viewer__exit {
+	top: -40px;
+}
+
+
+@media screen and (min-width: 515px) {
+	
+	.photo-viewer__exit {
+		top: -39px;
+		right: -39px;
+	}
+	
+}

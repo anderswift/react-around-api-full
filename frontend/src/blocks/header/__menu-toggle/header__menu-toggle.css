@@ -1,0 +1,17 @@
+.header__menu-toggle {
+  display: block;
+  width: 24px;
+  height: 21px;
+  margin: 30px 30px 0 0;
+  grid-area: menu-side;
+  justify-self: end;
+  background: url(../../../images/menu.svg);
+}
+
+@media screen and (min-width: 480px) {
+
+  .header__menu-toggle {
+    display: none;
+  }
+
+}

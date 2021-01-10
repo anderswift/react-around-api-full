@@ -1,0 +1,23 @@
+.header__account-item {
+  color: #fff;
+  margin: 5px 30px 0 24px;
+  padding: 0;
+}
+
+
+@media screen and (min-width: 618px) {
+	
+  .header__account-item {
+    margin: 7px 0 0 24px;
+  }
+	
+}
+
+
+@media screen and (min-width: 918px) {
+
+  .header__account-item {
+    margin: 0 0 0 24px;
+  }
+
+}

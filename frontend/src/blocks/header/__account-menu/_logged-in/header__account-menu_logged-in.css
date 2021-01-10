@@ -1,0 +1,21 @@
+.header__account-menu_logged-in {
+  display: none;
+  grid-area: menu;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid rgb(84, 84, 84, .7);
+  padding: 30px 0;
+}
+
+
+@media screen and (min-width: 480px) {
+
+  .header__account-menu_logged-in {
+    display: flex;
+    border: none;
+    text-align: right;
+    width: auto; 
+    padding: 0 0 30px 0;
+  }
+
+}

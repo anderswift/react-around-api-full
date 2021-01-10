@@ -1,0 +1,30 @@
+.form__input {
+  width: 100%;
+	box-sizing: border-box;
+	font-size: 14px;
+	line-height: 17px;
+	color: #fff; 
+	border: none;
+	outline: none;
+	border-bottom: 2px solid rgba(255, 255, 255, .7);
+	margin: 30px 0 0 0;
+	padding: 0 0 10px 0;
+  transition: border-color 250ms ease-out;
+  background: transparent;
+}
+
+.form__input:hover, .form__input:focus {
+	border-color: rgba(255, 255, 255, 1);
+}
+
+.form__input::-webkit-input-placeholder {
+	color: rgba(255, 255, 255, .7);
+}
+
+.form__input:-ms-input-placeholder {
+	color: rgba(255, 255, 255, .7);
+}
+
+.form__input::placeholder {
+	color: rgba(255, 255, 255, .7);
+}

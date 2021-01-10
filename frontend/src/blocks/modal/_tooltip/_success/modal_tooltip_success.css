@@ -1,0 +1,6 @@
+.modal_tooltip_success {
+  text-align: center;
+  background: #fff url(../../../../images/success-icon.svg) 50% 60px no-repeat;
+  background-size: 120px 120px; 
+  padding-top: 212px; 
+}

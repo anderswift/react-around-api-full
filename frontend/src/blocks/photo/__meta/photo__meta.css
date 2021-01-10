@@ -1,0 +1,10 @@
+.photo__meta {
+	background: #fff;
+	color: #000; 
+	border-radius: 0 0 10px 10px;
+	padding: 0 20px 0 21px;
+	min-height: 80px; 
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

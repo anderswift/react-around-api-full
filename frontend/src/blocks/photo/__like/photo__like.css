@@ -1,0 +1,8 @@
+.photo__like {
+	display: block;
+	width: 23px;
+	height: 36px;
+	background: url(../../../images/like.svg) 50% 0 no-repeat;
+  background-size: 23px 19px;
+  padding-top: 20px;
+}

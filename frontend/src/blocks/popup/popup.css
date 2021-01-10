@@ -1,0 +1,23 @@
+@import url(./__item/popup__item.css);
+@import url(./__exit/popup__exit.css);
+
+.popup {
+	background: rgba(0, 0, 0, .5);
+	position: fixed; 
+	top: 0;
+  width: 100%;
+  box-sizing: border-box;
+	left: 0;
+  height: 100%;
+  display: flex; 
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease-in, visibility .25s;
+  padding: 0 20px;
+}
+
+@media screen and (min-width: 460px) {
+  .popup {
+    padding: 0 50px;
+  }
+}

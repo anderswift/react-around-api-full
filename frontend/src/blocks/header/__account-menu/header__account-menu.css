@@ -1,0 +1,37 @@
+.header__account-menu {
+  text-align: right;
+  grid-area: menu-side;
+  justify-self: end;
+  align-self: center;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+}
+
+
+@media screen and (min-width: 480px) {
+
+  .header__account-menu {
+    padding-bottom: 30px;
+  }
+
+}
+
+
+@media screen and (min-width: 618px) {
+
+  .header__account-menu {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+}
+
+@media screen and (min-width: 918px) {
+
+  .header__account-menu {
+    padding-bottom: 20px;
+  }
+
+}
+

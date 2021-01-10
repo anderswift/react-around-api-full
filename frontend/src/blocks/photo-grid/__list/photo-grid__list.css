@@ -1,0 +1,16 @@
+.photo-grid__list {
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: repeat( auto-fill, minmax(282px, 1fr) );
+	row-gap: 20px;
+}
+
+
+@media screen and (min-width: 618px) { 
+
+	.photo-grid__list {
+		margin: 50px auto 66px auto;
+		gap: 21px 18px;
+	}
+
+}

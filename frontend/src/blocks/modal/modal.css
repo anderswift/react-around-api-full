@@ -1,0 +1,28 @@
+@import url(./__heading/modal__heading.css);
+@import url(./__input/modal__input.css);
+@import url(./__button/modal__button.css);
+@import url(./__button/_disabled/modal__button_disabled.css);
+
+
+
+.modal {
+  width: 430px;
+  height: auto;
+  min-height: auto;
+  margin: auto;
+  padding: 36px 18px;
+	background: #fff;
+  color: #000;
+	border-radius: 10px;
+  position: relative;
+  text-align: left;
+}
+
+
+@media screen and (min-width: 460px) {
+	
+	.modal {
+		padding: 36px;
+	}
+	
+}

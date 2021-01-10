@@ -1,0 +1,15 @@
+@import url(./__image/photo__image.css);
+@import url(./__meta/photo__meta.css);
+@import url(./__caption/photo__caption.css);
+@import url(./__like/photo__like.css);
+@import url(./__like/_on/photo__like_on.css);
+@import url(./__like-count/photo__like-count.css);
+@import url(./__delete/photo__delete.css);
+
+.photo {
+	width: 282px;
+	position: relative; 
+}
+
+
+

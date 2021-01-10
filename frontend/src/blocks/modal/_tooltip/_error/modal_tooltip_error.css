@@ -1,0 +1,6 @@
+.modal_tooltip_error {
+  text-align: center;
+  background: #fff url(../../../../images/error-icon.svg) 50% 60px no-repeat;
+  background-size: 120px 120px; 
+  padding-top: 212px; 
+}

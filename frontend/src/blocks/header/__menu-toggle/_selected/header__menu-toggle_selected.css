@@ -1,0 +1,5 @@
+.header__menu-toggle_selected {
+  background: url(../../../../images/exit.svg) 50% 50% no-repeat;
+  background-size: 44px 44px;
+	height: 24px;
+}
