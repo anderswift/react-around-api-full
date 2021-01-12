@@ -18,7 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* anderswift@52.146.12.155:/home/anderswift/aroundtheus-frontend" 
+    "predeploy": "npm run build",
+    "deploy": "scp -r -i d:/ssh/aroundtheus_key.pem ./build/* anderswift@52.146.12.155:/home/anderswift/aroundtheus-frontend" 
   },
   "eslintConfig": {
     "extends": [

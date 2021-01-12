@@ -26,14 +26,14 @@ app.use(express.json());
 
 app.use(requestLogger);
 
-app.post('/api/signin', celebrate({
+app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(10),
   }),
 }), login);
 
-app.post('/api/signup', celebrate({
+app.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(10),
@@ -42,10 +42,10 @@ app.post('/api/signup', celebrate({
 
 app.use(auth);
 
-app.use('/api/', cardRoutes);
-app.use('/api/', userRoutes);
+app.use('/', cardRoutes);
+app.use('/', userRoutes);
 
-app.use('/api/*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
+app.use('*', (req, res, next) => { next(new NotFoundError('Requested resource not found')); });
 
 app.use(errorLogger);
 

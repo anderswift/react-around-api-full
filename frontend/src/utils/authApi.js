@@ -72,7 +72,7 @@ class AuthApi {
 
 
 export const auth= new AuthApi({
-  baseUrl: "https://register.nomoreparties.co/",
+  baseUrl: "https://api.aroundtheus.anderswift.com/",
   headers: {
     "Content-Type": "application/json"
   }

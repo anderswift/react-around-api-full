@@ -104,9 +104,9 @@ class Api {
 
 
 export const api= new Api({
-  baseUrl: "https://around.nomoreparties.co/v1/group-6/",
+  baseUrl: "https://api.aroundtheus.anderswift.com/",
   headers: {
-    authorization: "95a5b594-7318-496e-ada2-f96a00133f51",
+    authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmZiZDJiMmEzNzk3MzUyOTIxYzgzOGQiLCJpYXQiOjE2MTA0OTM2MjUsImV4cCI6MTYxMTA5ODQyNX0.VFKUAtsEeL8djlaJdfYMiOYgfkmIgoo3gGoB84C1Ebo",
     "Content-Type": "application/json"
   }
 }); 
