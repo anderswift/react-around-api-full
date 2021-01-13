@@ -22,7 +22,7 @@ router.get('/users/:id', celebrate({
 router.patch('/users/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(40),
-    link: Joi.string().uri().required().max(200),
+    about: Joi.string().required().max(200),
   }),
 }), updateProfile);
 
