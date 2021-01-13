@@ -18,9 +18,6 @@ router.post('/cards', celebrate({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().uri(),
   }),
-  headers: Joi.object().keys({
-    Authorization: Joi.string().regex(/^Bearer/).required(),
-  }),
 }), createCard);
 
 router.delete('/cards/:cardId', celebrate({
