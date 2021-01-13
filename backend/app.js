@@ -15,6 +15,9 @@ const cardRoutes = require('./routes/cards');
 const { PORT = 3000 } = process.env;
 const app = express();
 
+app.use(cors());
+app.options('*', cors());
+
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -24,7 +27,6 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 app.use(helmet());
 app.use(express.json());
-app.options('*', cors());
 
 app.use(requestLogger);
 
