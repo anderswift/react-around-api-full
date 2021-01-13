@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middleware/logger');
@@ -23,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 app.use(helmet());
 app.use(express.json());
+app.options('*', cors());
 
 app.use(requestLogger);
 
