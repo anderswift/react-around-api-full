@@ -1,13 +1,13 @@
 function Card({card, currentUserId, onCardClick, onDeleteClick, onLikeClick}) {
 
-  const currentUserOwns= card.owner._id === currentUserId;
-  const currentUserLikes= card.likes.some(user => user._id === currentUserId);
+  const currentUserOwns= currentUserId === card.owner._id;  
+  const currentUserLikes= card.likes.some(userId => userId === currentUserId);
 
   const handleClick= () => { onCardClick(card); }
   const handleDeleteClick= () => { onDeleteClick(card); }
   const handleLikeUnlike= (e) => { onLikeClick(card, e); }
 
-
+  
 
   return (
     <li className="photo" id={card._id}>

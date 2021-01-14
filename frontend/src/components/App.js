@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
-import { auth } from '../utils/authApi.js';
+import { api } from '../utils/api.js';
 import { AccountContext } from '../contexts/AccountContext.js';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -19,7 +19,7 @@ function App() {
   const history = useHistory();
 
   const [loggedIn, setLoggedIn]= useState(false);
-  const [accountData, setAccountData]= useState({ _id: '', email: ''});
+  const [accountData, setAccountData]= useState({ _id: '', email: '', name: '', about: '', avatar: ''});
 
   const [isLoading, setIsLoading]= useState(false);
 
@@ -48,10 +48,10 @@ function App() {
 
   const handleRegister= (credentials) => {
     setIsLoading(true);
-    auth.register(credentials)
+    api.register(credentials)
       .then((res) => {
         setIsTooltipSuccessOpen(true);
-        login(res.data);
+        login(res);
       })
       .catch(() => {
         setIsTooltipErrorOpen(true);
@@ -64,9 +64,9 @@ function App() {
 
   const handleLogin= (credentials) => {
     setIsLoading(true);
-    return auth.login(credentials)
+    return api.login(credentials)
       .then((res) => {
-        login(res.data);
+        login(res);
         setIsLoading(false);
       })
       .catch(() => {
@@ -91,15 +91,15 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      auth.checkToken(token).then((res) => {
+      api.checkToken(token).then((res) => {
         if (res) {
           setLoggedIn(true);
-          setAccountData(res.data);
+          setAccountData(res);
           history.push('/');
         }
       });
     }
-  }, []);
+  }, [history]);
 
 
 

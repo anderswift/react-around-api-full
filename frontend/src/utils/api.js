@@ -6,6 +6,69 @@ class Api {
   }
   
   
+  checkToken(token) {
+    this._headers= {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+    return fetch(this._baseUrl + 'users/me', {
+      method: 'GET',
+      headers: this._headers
+    })
+    .then(res => {
+      if (res.ok) return res.json();
+      return Promise.reject(`Error: ${res.status}`);
+    })
+  }
+  
+  
+  login(data) {
+    return fetch(this._baseUrl + 'signin', {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      if (res.ok) return res.json();
+      return Promise.reject(`Error: ${res.status}`);
+    })
+    .then(data => {
+      localStorage.setItem('jwt', data.token);
+      return this.checkToken(data.token);
+    }); 
+  }
+  
+  
+  register(credentials) {
+    return fetch(this._baseUrl + 'signup', {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify(credentials)
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      } 
+      return Promise.reject(`Error: ${res.status}`);
+    }).then(data => {
+      // now auto-login the user and save token
+      return fetch(this._baseUrl + 'signin', {
+        method: "POST",
+        headers: this._headers,
+        body: JSON.stringify(credentials)
+      })
+      .then(res => {
+        if (res.ok) return res.json();
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then(res => {
+        localStorage.setItem('jwt', res.token);
+        return data; 
+        // no need to run checkToken, we already have the data returned from registering
+      })
+    }); 
+  }
+  
+  
   getInitialCards() {
     return fetch(this._baseUrl + 'cards', {
       headers: this._headers
@@ -61,7 +124,7 @@ class Api {
     let method= 'DELETE';
     if(liked) method= 'PUT';
 
-    return fetch(this._baseUrl + 'cards/likes/' + cardId, {
+    return fetch(this._baseUrl + 'cards/' + cardId + '/likes', {
       method: method,
       headers: this._headers
     }).then(res => {
@@ -106,7 +169,6 @@ class Api {
 export const api= new Api({
   baseUrl: "https://api.aroundtheus.anderswift.com/",
   headers: {
-    authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmZiZDJiMmEzNzk3MzUyOTIxYzgzOGQiLCJpYXQiOjE2MTA0OTM2MjUsImV4cCI6MTYxMTA5ODQyNX0.VFKUAtsEeL8djlaJdfYMiOYgfkmIgoo3gGoB84C1Ebo",
     "Content-Type": "application/json"
   }
-}); 
+});

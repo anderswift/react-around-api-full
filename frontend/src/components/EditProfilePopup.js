@@ -1,6 +1,6 @@
 
 import { useEffect, useState, useContext } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { AccountContext } from '../contexts/AccountContext';
 
 import PopupWithForm from './PopupWithForm';
 import FormField from './FormField';
@@ -9,7 +9,7 @@ import FormField from './FormField';
 
 function EditProfilePopup({isOpen, isSaving, onClose, onSubmit}) {
 
-  const currentUser= useContext(CurrentUserContext);
+  const accountData = useContext(AccountContext);
 
   const [values, setValues]= useState({ name: '', about: '' });
   const [errors, setErrors]= useState({});
@@ -37,17 +37,17 @@ function EditProfilePopup({isOpen, isSaving, onClose, onSubmit}) {
   }
 
   const handleReset= () => {
-    setValues({ name: currentUser.name || '', about: currentUser.about || '' }); // prevent undefined value on controlled form field
+    setValues({ name: accountData.name || '', about: accountData.about || '' }); // prevent undefined value on controlled form field
     setErrors({});
-    setSubmitReady(!!(currentUser.name && currentUser.about));
+    setSubmitReady(!!(accountData.name && accountData.about));
   }
 
 
   
   useEffect(() => { 
-    setValues({ name: currentUser.name, about: currentUser.about });
+    setValues({ name: accountData.name, about: accountData.about });
     setSubmitReady(true);
-  }, [currentUser]); 
+  }, [accountData]); 
   
 
 

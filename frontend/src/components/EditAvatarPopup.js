@@ -1,6 +1,6 @@
 
 import { useEffect, useState, useContext } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { AccountContext } from '../contexts/AccountContext';
 
 import PopupWithForm from './PopupWithForm';
 import FormField from './FormField';
@@ -12,7 +12,7 @@ import FormField from './FormField';
 
 function EditAvatarPopup({isOpen, isSaving, onClose, onSubmit}) {
 
-  const currentUser= useContext(CurrentUserContext);
+  const accountData = useContext(AccountContext);
 
   const [avatar, setAvatar]= useState('');
   const [error, setError]= useState('');
@@ -32,17 +32,17 @@ function EditAvatarPopup({isOpen, isSaving, onClose, onSubmit}) {
   }
 
   function handleReset() {
-    setAvatar(currentUser.avatar || ''); // prevent undefined value on controlled form field
+    setAvatar(accountData.avatar || ''); // prevent undefined value on controlled form field
     setError('');
-    setSubmitReady(!!currentUser.avatar); // convert string to boolean to determine button state
+    setSubmitReady(!!accountData.avatar); // convert string to boolean to determine button state
   }
 
 
 
   useEffect(() => { 
-      setAvatar(currentUser.avatar || ''); // prevent undefined value on controlled form field
-      setSubmitReady(!!currentUser.avatar); // convert string to boolean to determine button state
-  }, [currentUser]); 
+      setAvatar(accountData.avatar || ''); // prevent undefined value on controlled form field
+      setSubmitReady(!!accountData.avatar); // convert string to boolean to determine button state
+  }, [accountData]); 
 
 
   

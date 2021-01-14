@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { api } from '../utils/api.js';
 
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import avatar from '../images/avatar.png'; // default avatar (black 1 pixel)
+import { AccountContext } from '../contexts/AccountContext';
 
 import Main from './Main';
 import EditProfilePopup from './EditProfilePopup';
@@ -16,7 +15,9 @@ import PopupWithImage from './PopupWithImage';
 
 function AroundTheUS() {
 
-  const [currentUser, setCurrentUser]= useState({name: '', about: '', avatar: avatar});
+  const accountContext = useContext(AccountContext);
+  
+  const [accountData, setAccountData] = useState(accountContext.accountData);
   const [cards, setCards]= useState([]);
   const [selectedCard, selectCard]= useState({});
   const [isSaving, setIsSaving]= useState(false);
@@ -75,7 +76,7 @@ function AroundTheUS() {
     setIsSaving(true);
     api.setUserInfo(userData)
     .then((user) => {
-      setCurrentUser(user);
+      setAccountData(user);
       closeAllPopups();
       setTimeout(() => { setIsSaving(false); }, 200); // wait until fade animation completes to reset button text
     })
@@ -89,7 +90,7 @@ function AroundTheUS() {
     setIsSaving(true);
     api.setUserAvatar(avatarData)
     .then((user) => {
-      setCurrentUser(user);
+      setAccountData(user);
       closeAllPopups();
       setTimeout(() => { setIsSaving(false); }, 200);
     })
@@ -116,7 +117,7 @@ function AroundTheUS() {
   }
 
   const likeUnlikeCard= (card, e) => {
-    const currentUserLikes= card.likes.some(user => user._id === currentUser._id);
+    const currentUserLikes= card.likes.some(userId => userId === accountData._id);
     api.updateLikes(card._id, !currentUserLikes)
       .then((updatedCard) => {
         const newCards = cards.map((c) => c._id === card._id ? updatedCard : c);  
@@ -146,26 +147,17 @@ function AroundTheUS() {
 
 
   useEffect(() => {
-    api.getUserInfo()
-    .then((user) => {
-      setCurrentUser(user);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, []);
-
-  useEffect(() => {
-    if(!currentUser) return;
+    if(!accountData) return;
     api.getInitialCards()
       .then(setCards)
       .catch((err) => {
         console.log(err);
       });
-  }, [currentUser]);
+  }, [accountData]);
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <AccountContext.Provider value={accountData}>
+
       <Main 
         cards={cards}
         onEditAvatar={handleEditAvatarClick} 
@@ -182,7 +174,8 @@ function AroundTheUS() {
       <DeletePlacePopup isOpen={isDeletePlacePopupOpen} onClose={closeAllPopups} onSubmit={deleteCard} cardId={selectedCard._id} isSaving={isSaving} />
 
       <PopupWithImage isOpen={isImagePopupOpen} onClose={closeAllPopups} card={selectedCard} />
-    </CurrentUserContext.Provider>
+    
+    </AccountContext.Provider>
   );
 
 }

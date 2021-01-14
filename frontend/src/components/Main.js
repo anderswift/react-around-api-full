@@ -1,6 +1,6 @@
 
 import { useContext } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { AccountContext } from '../contexts/AccountContext';
 
 import Card from './Card';
 
@@ -8,21 +8,19 @@ import Card from './Card';
 
 function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onDeleteClick, onLikeClick}) {
 
-  const currentUser = useContext(CurrentUserContext);
-  
-
+  const accountData = useContext(AccountContext);
 
   return (
     <main>
           
       <section className="profile">
         <button className="profile__edit-avatar" aria-label="Edit Avatar" onClick={onEditAvatar}>
-          <img className="profile__avatar" src={currentUser.avatar} alt="Avatar" />
+          <img className="profile__avatar" src={accountData.avatar} alt="Avatar" />
         </button>
         <div className="profile__info">
-          <h1 className="profile__name">{currentUser.name}</h1>
+          <h1 className="profile__name">{accountData.name}</h1>
           <button type="button" className="profile__edit-info button" aria-label="Edit profile" onClick={onEditProfile}></button>
-          <p className="profile__about">{currentUser.about}</p>
+          <p className="profile__about">{accountData.about}</p>
         </div>
         
         <button type="button" className="profile__add-image button" aria-label="Add image" onClick={onAddPlace}></button>
@@ -33,7 +31,7 @@ function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onDe
         <ul className="photo-grid__list list">
 
           {cards.map(card => (
-            <Card card={card} key={card._id} currentUserId={currentUser._id} onCardClick={onCardClick} onDeleteClick={onDeleteClick} onLikeClick={onLikeClick} />
+            <Card card={card} key={card._id} currentUserId={accountData._id} onCardClick={onCardClick} onDeleteClick={onDeleteClick} onLikeClick={onLikeClick} />
           ))}
 
         </ul>
