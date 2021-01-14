@@ -4,7 +4,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
 function getCards(req, res, next) {
-  return Card.find({})
+  return Card.find({}).sort({ createdAt: -1 })
     .then((cards) => {
       res.status(200).send(cards);
     })
