@@ -2,21 +2,32 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
-const { celebrate, Joi, errors } = require('celebrate');
+const rateLimit = require('express-rate-limit');
+const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const auth = require('./middleware/auth');
 const NotFoundError = require('./errors/NotFoundError');
 
-const { login, createUser } = require('./controllers/userController');
+const accountRoutes = require('./routes/account');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 
+const errorHandler = require('./errors/errorHandler');
+
 const { PORT = 3000 } = process.env;
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+});
+
 const app = express();
 
 app.use(cors());
 app.options('*', cors());
+
+app.use(limiter);
 
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
@@ -37,19 +48,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(10),
-  }),
-}), login);
-
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(10),
-  }),
-}), createUser);
+app.use('/', accountRoutes);
 
 app.use(auth);
 
@@ -63,10 +62,6 @@ app.use(errorLogger);
 // celebrate error handler
 app.use(errors());
 
-app.use((err, req, res, next) => {
-  const defaultStatus = (err.name === 'ValidationError') ? 400 : 500;
-  const { statusCode = defaultStatus, message = 'An error occurred on the server' } = err;
-  res.status(statusCode).send({ message });
-});
+app.use(errorHandler);
 
 app.listen(PORT);
