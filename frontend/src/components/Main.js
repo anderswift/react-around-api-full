@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AccountContext } from '../contexts/AccountContext';
 
 import Card from './Card';
+import defaultAvatar from '../images/avatar.png';
 
 
 
@@ -15,7 +16,7 @@ function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onDe
           
       <section className="profile">
         <button className="profile__edit-avatar" aria-label="Edit Avatar" onClick={onEditAvatar}>
-          <img className="profile__avatar" src={accountData.avatar} alt="Avatar" />
+          <img className="profile__avatar" src={accountData.avatar || defaultAvatar} alt="Avatar" />
         </button>
         <div className="profile__info">
           <h1 className="profile__name">{accountData.name}</h1>
